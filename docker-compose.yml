@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: corserva_server
+    restart: unless-stopped
+    image: node-api-dev:1.0.0
+    build:
+      context: corserva-server
+      target: development
+      dockerfile: Dockerfile
+    ports:
+      - "2000:2000"
+    environment:
+       - SERVER_PORT=2000
+       - DB_USERNAME=corserva
+       - DB_NAME=corserva
+       - DB_PASSWORD=corserva
+       - DB_HOST=pg_db
+    depends_on:
+       - pg_db
+  pg_db:
+    container_name: pg_db
+    image: postgres:14.1-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=corserva
+      - POSTGRES_PASSWORD=corserva
+      - POSTGRES_DB=corserva
+    volumes:
+      - db:/var/lib/postgresql/data
+  migrate:
+    build:
+      context: corserva-server
+    command: npm run db:migrate
+    environment:
+       - SERVER_PORT=2000
+       - DB_USERNAME=corserva
+       - DB_NAME=corserva
+       - DB_PASSWORD=corserva
+       - DB_HOST=pg_db
+    depends_on:
+      - pg_db
+      - api
+  seed:
+    build:
+      context: corserva-server
+    command: npm run db:seed:all
+    environment:
+       - SERVER_PORT=2000
+       - DB_USERNAME=corserva
+       - DB_NAME=corserva
+       - DB_PASSWORD=corserva
+       - DB_HOST=pg_db
+    depends_on:
+      - pg_db
+      - api
+
+  client:
+    container_name: corserva_client
+    restart: unless-stopped
+    image: corserva-client-dev:1.0.0
+    build:
+      context: corserva-client
+      target: development
+      dockerfile: Dockerfile
+    
+    ports:
+       - 2001:2001
+    depends_on:
+      - api
+volumes:
+  db: {}
