@@ -18,7 +18,6 @@ export function CartItem({ id, quantity }: CartItemProps) {
     const fetchData = async () => {
       const response = await itemService.getItem(id);
       setItem(response);
-      console.log(response);
     };
     fetchData();
   }, []);

@@ -10,10 +10,8 @@ export function NavBar() {
   const navigate = useNavigate();
 
   const { user, setUser } = useUserContext();
-  console.log("navbar", user);
   const handleLogout = async () => {
     await authService.logout();
-    console.log(user);
     setUser({} as User);
     navigate("/");
   };

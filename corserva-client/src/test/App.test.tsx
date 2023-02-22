@@ -11,7 +11,6 @@ describe("App", function () {
       ReactDOM.render(<App />, container);
     });
     const header = container.querySelector("h1");
-    console.log(header);
     expect(header?.textContent).toBe("");
   });
 });

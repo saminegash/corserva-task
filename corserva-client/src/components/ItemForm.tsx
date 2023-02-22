@@ -98,7 +98,7 @@ export const ItemForm = () => {
     <>
       <h1>Item</h1>
       <Form>
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="name">Name</Form.Label>
           <Form.Control
             type="text"
@@ -108,10 +108,10 @@ export const ItemForm = () => {
           />
         </Form.Group>
         {errors && errors["name"] && (
-          <span className="alert alert-danger">{errors["name"]}</span>
+          <span className="alert alert-danger my-3">{errors["name"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="vendorName">VendorName</Form.Label>
           <Form.Control
             type="text"
@@ -121,10 +121,12 @@ export const ItemForm = () => {
           />
         </Form.Group>
         {errors && errors["vendorName"] && (
-          <span className="alert alert-danger">{errors["vendorName"]}</span>
+          <span className="alert alert-danger my-3">
+            {errors["vendorName"]}
+          </span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="description">Description</Form.Label>
           <Form.Control
             type="text"
@@ -134,10 +136,12 @@ export const ItemForm = () => {
           />
         </Form.Group>
         {errors && errors["description"] && (
-          <span className="alert alert-danger">{errors["description"]}</span>
+          <span className="alert alert-danger my-3">
+            {errors["description"]}
+          </span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="photo">Photo</Form.Label>
           <Form.Control
             type="text"
@@ -147,10 +151,10 @@ export const ItemForm = () => {
           />
         </Form.Group>
         {errors && errors["photo"] && (
-          <span className="alert alert-danger">{errors["photo"]}</span>
+          <span className="alert alert-danger my-3">{errors["photo"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="price">Price</Form.Label>
           <Form.Control
             type="number"
@@ -160,10 +164,10 @@ export const ItemForm = () => {
           />
         </Form.Group>
         {errors && errors["price"] && (
-          <span className="alert alert-danger">{errors["price"]}</span>
+          <span className="alert alert-danger my-3">{errors["price"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="quantity">Quantity</Form.Label>
           <Form.Control
             type="number"
@@ -173,7 +177,7 @@ export const ItemForm = () => {
           />
         </Form.Group>
         {errors && errors["quantity"] && (
-          <span className="alert alert-danger">{errors["quantity"]}</span>
+          <span className="alert alert-danger my-3">{errors["quantity"]}</span>
         )}
 
         <Button disabled={errorExist} variant="primary" type="submit">

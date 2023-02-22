@@ -80,7 +80,6 @@ export const RegisterForm = () => {
       roleId: "521fae64-df67-4caf-b812-c85021e114fa",
     };
     const response = await authService.register(registerData);
-    console.log(response);
     setUser(response.data.user);
     navigate("/");
   };
@@ -105,9 +104,9 @@ export const RegisterForm = () => {
   }, [data.name, data.password, data.email, data.confirmPassword]);
   return (
     <>
-      <h1>Register</h1>
+      <h1 className="my-3">Register</h1>
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="name">Name</Form.Label>
           <Form.Control
             type="text"
@@ -118,10 +117,10 @@ export const RegisterForm = () => {
           />
         </Form.Group>
         {errors && errors["name"] && (
-          <span className="alert alert-danger">{errors["name"]}</span>
+          <span className="alert alert-danger my-3">{errors["name"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
             type="email"
@@ -131,10 +130,10 @@ export const RegisterForm = () => {
           />
         </Form.Group>
         {errors && errors["email"] && (
-          <span className="alert alert-danger">{errors["email"]}</span>
+          <span className="alert alert-danger my-3">{errors["email"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="password">Password</Form.Label>
           <Form.Control
             type="password"
@@ -144,10 +143,10 @@ export const RegisterForm = () => {
           />
         </Form.Group>
         {errors && errors["password"] && (
-          <span className="alert alert-danger">{errors["password"]}</span>
+          <span className="alert alert-danger my-3">{errors["password"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="confirmPassword"> Confirm Password</Form.Label>
           <Form.Control
             type="password"
@@ -157,12 +156,17 @@ export const RegisterForm = () => {
           />
         </Form.Group>
         {errors && errors["confirmPassword"] && (
-          <span className="alert alert-danger">
+          <span className="alert alert-danger my-3">
             Password must match to continue
           </span>
         )}
 
-        <Button disabled={errorExist} variant="primary" type="submit">
+        <Button
+          className="my-3"
+          disabled={errorExist}
+          variant="primary"
+          type="submit"
+        >
           Submit
         </Button>
       </Form>

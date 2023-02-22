@@ -16,14 +16,12 @@ type RegisterDataProps = {
 
 async function login({ email, password }: { email: string; password: string }) {
   const data = await http.post(`${apiEndpoint}/login`, { email, password });
-  console.log(data.data);
   localStorage.setItem(tokenKey, data.data.accessToken);
   return data.data;
 }
 
 async function register(registerData: RegisterDataProps) {
   const data = await http.post(`${apiEndpoint}/signup`, registerData);
-  console.log(data);
   localStorage.setItem(tokenKey, data.data.accessToken);
 
   return data.data;

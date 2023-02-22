@@ -26,6 +26,9 @@ const initData = {
 export const LoginForm = () => {
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef();
+  const [networkError, setNetworkError] = useState(
+    {} as { status: number; message: string }
+  );
 
   const [errors, setErrors] = useState({} as LoginProps);
   const [data, setData] = useState<LoginProps>(initData);
@@ -60,13 +63,20 @@ export const LoginForm = () => {
       setErrorExist(false);
       setErrors(initData);
     }
-
-    const response = await authService.login({
-      email: data.email,
-      password: data.password,
-    });
-    setUser(response.data.user);
-    navigate("/");
+    try {
+      const response = await authService.login({
+        email: data.email,
+        password: data.password,
+      });
+      setUser(response.data.user);
+      navigate("/");
+    } catch (err: any) {
+      console.log(err.response.data);
+      setNetworkError({
+        status: err.response.data.status as number,
+        message: err.response.data.message,
+      });
+    }
   };
   useEffect(() => {
     userRef?.current?.focus();
@@ -88,9 +98,14 @@ export const LoginForm = () => {
   }, [data.password, data.email]);
   return (
     <>
-      <h1>Login</h1>
+      <h1 className="my-3">Login</h1>
+      {networkError && networkError["status"] && (
+        <span className="alert alert-danger my-3 align-center">
+          {networkError["message"]}: email or password incorrect
+        </span>
+      )}
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
             type="email"
@@ -100,10 +115,10 @@ export const LoginForm = () => {
           />
         </Form.Group>
         {errors && errors["email"] && (
-          <span className="alert alert-danger">{errors["email"]}</span>
+          <span className="alert alert-danger my-3">{errors["email"]}</span>
         )}
 
-        <Form.Group className="mb-3">
+        <Form.Group className="my-3">
           <Form.Label htmlFor="password">Password</Form.Label>
           <Form.Control
             type="password"
@@ -116,7 +131,12 @@ export const LoginForm = () => {
           <span className="alert alert-danger">{errors["password"]}</span>
         )}
 
-        <Button disabled={errorExist} variant="primary" type="submit">
+        <Button
+          className="my-3"
+          disabled={errorExist}
+          variant="primary"
+          type="submit"
+        >
           Submit
         </Button>
       </Form>
